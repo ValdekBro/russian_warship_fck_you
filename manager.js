@@ -20,9 +20,10 @@ const run = async () => {
   for (let i = 0; i < EXECUTION_LIMIT; i++) {
     await sleepRand(TIMEOUT_BASE, TIMEOUT_BASE + 1000)
     endpoints.forEach(endpoint => {
-      if (endpoint.stats.errorsInRow < 5)
+      if (endpoint.stats.errorsInRow > 5)
         endpoint.cooldown(60 * 10) // cooldown for 10 min
-      endpoint.attack()
+      else
+        endpoint.attack()
     })
   }
 
