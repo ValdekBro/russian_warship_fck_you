@@ -235,32 +235,32 @@
         "body": null
     },
     {
-        "url": "https://mail.rkn.gov.ru (https://mail.rkn.gov.ru/)/",
+        "url": "https://mail.rkn.gov.ru",
         "type": "GET",
         "body": null
     },
     {
-        "url": "https://cloud.rkn.gov.ru (https://cloud.rkn.gov.ru/)",
+        "url": "https://cloud.rkn.gov.ru",
         "type": "GET",
         "body": null
     },
     {
-        "url": "https://mvd.gov.ru (https://mvd.gov.ru/)",
+        "url": "https://mvd.gov.ru",
         "type": "GET",
         "body": null
     },
     {
-        "url": "https://pwd.wto.economy.gov.ru (https://pwd.wto.economy.gov.ru/)/ ",
+        "url": "https://pwd.wto.economy.gov.ru",
         "type": "GET",
         "body": null
     },
     {
-        "url": "https://stroi.gov.ru (https://stroi.gov.ru/)/",
+        "url": "https://stroi.gov.ru",
         "type": "GET",
         "body": null
     },
     {
-        "url": "https://proverki.gov.ru (https://proverki.gov.ru/)/",
+        "url": "https://proverki.gov.ru",
         "type": "GET",
         "body": null
     },
