@@ -3,5 +3,10 @@
         "url": "https://www.google.ru/",
         "type": "GET",
         "body": null
+    },
+    {
+        "url": "https://www.youtube.com/",
+        "type": "GET",
+        "body": null
     }
 ]

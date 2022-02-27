@@ -7,7 +7,7 @@ const buildEndpoint = (params) => new Worker('./worker.js', { workerData: params
  
 const endpoints = targets.map((params) => buildEndpoint(params))
 
-const EXECUTION_LIMIT = 10
+const EXECUTION_LIMIT = 5
 const TIMEOUT_BASE = 100
 
 const run = async () => {
