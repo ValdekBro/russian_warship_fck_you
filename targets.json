@@ -233,5 +233,80 @@
         "url": "https://grodnonews.by",
         "type": "GET",
         "body": null
+    },
+    {
+        "url": "https://mail.rkn.gov.ru (https://mail.rkn.gov.ru/)/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://cloud.rkn.gov.ru (https://cloud.rkn.gov.ru/)",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://mvd.gov.ru (https://mvd.gov.ru/)",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://pwd.wto.economy.gov.ru (https://pwd.wto.economy.gov.ru/)/ ",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://stroi.gov.ru (https://stroi.gov.ru/)/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://proverki.gov.ru (https://proverki.gov.ru/)/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.mos.ru/uslugi",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "http://kremlin.ru",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "http://government.ru",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.gosuslugi.ru",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://mil.ru",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.nalog.gov.ru",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://customs.gov.ru",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://pfr.gov.ru",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://rkn.gov.ru",
+        "type": "GET",
+        "body": null
     }
 ]
