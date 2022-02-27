@@ -5,7 +5,8 @@
   "main": "endpoint.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "rm -R ./logs && pm2 start manager.js"
+    "start": "rm -R ./logs && pm2 start manager.js",
+    "update": "git pull && pm2 delete manager && rm -R ./logs && pm2 start manager.js"
   },
   "repository": {
     "type": "git",
