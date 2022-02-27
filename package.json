@@ -4,7 +4,8 @@
   "description": "",
   "main": "endpoint.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rm -R ./logs && node manager.js"
   },
   "repository": {
     "type": "git",
