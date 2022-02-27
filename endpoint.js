@@ -1,8 +1,11 @@
 class Endpoint {
+    isActive = true
+
     stats = {
         s: 0,
         e: 0,
-        lastE: null
+        lastE: null,
+        errorsInRow: 0
     }
 
     constructor(params, parentLogger) {
@@ -15,7 +18,7 @@ class Endpoint {
             hostname: q.hostname,
             port: q.port,
             method: this.type,
-            timeout: 5000,
+            timeout: 3000,
         };
         this._protocol = (q.protocol == "http") ? require('http') : require('https');
         this.logger = parentLogger.child({ url: this.url })
@@ -24,6 +27,7 @@ class Endpoint {
     }
 
     attack() {
+        if(!this.isActive) return Promise.resolve()
         const r = new Promise((res, rej) => {
             const req = this._protocol.request(
                 this._options,
@@ -41,7 +45,7 @@ class Endpoint {
                 req.write(this.body)
 
             req.on('socket', function (socket) {
-                socket.setTimeout(10000);
+                socket.setTimeout(5000);
                 socket.on('timeout', function () {
                     req.destroy();
                 });
@@ -52,11 +56,20 @@ class Endpoint {
         r.then(result => {
             this.logger.info(`${result.status} | ${result.error}`)
             if (result.status < 400) this.stats.s++
-            else this.stats.e++
+            else {
+                this.stats.e++
+                this.stats.errorsInRow++
+            }
         }).catch((e) => {
             this.logger.info(`Failed | ${e}`)
             this.stats.e++
+            this.stats.errorsInRow++
         })
+    }
+
+    cooldown(sec) {
+        this.isActive = false
+        setTimeout(() => { this.isActive = true; this.stats.errorsInRow = 0 }, sec * 1000)
     }
 }
 
