@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "rm -R -f ./logs && pm2 start manager.js",
-    "update": "git pull && pm2 delete manager && rm -R -f ./logs && pm2 start manager.js"
+    "update": "git pull && pm2 delete manager.js && rm -R -f ./logs && pm2 start manager.js"
   },
   "repository": {
     "type": "git",
