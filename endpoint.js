@@ -15,7 +15,7 @@ class Endpoint {
             hostname: q.hostname,
             port: q.port,
             method: this.type,
-            timeout: 2000,
+            timeout: 5000,
         };
         this._protocol = (q.protocol == "http") ? require('http') : require('https');
         this.logger = parentLogger.child({ url: this.url })
@@ -41,7 +41,7 @@ class Endpoint {
                 req.write(this.body)
 
             req.on('socket', function (socket) {
-                socket.setTimeout(3000);
+                socket.setTimeout(10000);
                 socket.on('timeout', function () {
                     req.destroy();
                 });

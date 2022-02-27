@@ -27,7 +27,7 @@ const run = async () => {
   }
 
   while (true) {
-    await sleep(1000)
+    await sleep(2000)
     console.clear()
     endpoints.forEach(endpoint => console.log(`${endpoint.url} | Errors: ${endpoint.stats.e} | Success: ${endpoint.stats.s}`))
   }
