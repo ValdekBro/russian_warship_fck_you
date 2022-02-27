@@ -25,17 +25,15 @@ const run = async () => {
       else
         endpoint.attack()
     })
-  }
 
-  while (true) {
-    await sleep(1000)
     const stats = {
       s: 0,
       e: 0
     }
-    endpoints.forEach(endpoint => {stats.s+=endpoint.stats.s; stats.e+=endpoint.stats.e})
+    endpoints.forEach(endpoint => { stats.s += endpoint.stats.s; stats.e += endpoint.stats.e })
     console.log(`Successfull ${stats.s} | Errors ${stats.e}`)
   }
+
 }
 
 run().catch(e => { throw e })
