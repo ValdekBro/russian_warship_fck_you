@@ -1,0 +1,23 @@
+{
+  "name": "russian_warship_fck_you",
+  "version": "1.0.0",
+  "description": "",
+  "main": "endpoint.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValdekBro/russian_warship_fck_you.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ValdekBro/russian_warship_fck_you/issues"
+  },
+  "homepage": "https://github.com/ValdekBro/russian_warship_fck_you#readme",
+  "dependencies": {
+    "pino": "^7.8.0",
+    "pino-pretty": "^7.5.1"
+  }
+}

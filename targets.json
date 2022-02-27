@@ -1,11 +1,236 @@
 [
     {
-        "url": "https://www.google.ru/",
+        "url": "https://www.sberbank.ru",
         "type": "GET",
         "body": null
     },
     {
-        "url": "https://www.youtube.com/",
+        "url": "https://www.vtb.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.gazprombank.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.gazprom.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://lukoil.ru",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://magnit.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.nornickel.com/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.surgutneftegas.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.tatneft.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.evraz.com/ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://nlmk.com/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.sibur.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.severstal.com/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.metalloinvest.com/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://nangs.org/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://rmk-group.ru/ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.tmk-group.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://ya.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.polymetalinternational.com/ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.uralkali.com/ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.eurosib.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://omk.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "http://belta.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://sputnik.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.tvr.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.sb.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://belmarket.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.belarus.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://belarus24.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://ont.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.024.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.belnovosti.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://mogilevnews.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.mil.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://yandex.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.slonves.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "http://www.ctv.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://radiobelarus.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://radiusfm.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://alfaradio.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://radiomir.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://radiostalica.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://radiobrestfm.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.tvrmogilev.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://minsknews.by",
+        "type": "GET",
+        "body": null
+    },  
+    {
+        "url": "https://zarya.by",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://grodnonews.by",
         "type": "GET",
         "body": null
     }
