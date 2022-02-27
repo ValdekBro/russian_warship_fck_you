@@ -12,14 +12,13 @@ const logger = pino(transport)
 const endpoints = targets.map((params) => new Endpoint(params, logger))
 
 const EXECUTION_LIMIT = 100000
-const TIMEOUT_BASE = 1000
+const TIMEOUT_BASE = 3000
 
 const run = async () => {
-  await sleep(2000)
-
   for (let i = 0; i < EXECUTION_LIMIT; i++) {
     await sleepRand(TIMEOUT_BASE, TIMEOUT_BASE + 1000)
     endpoints.forEach(endpoint => {
+      await sleep(200)
       if (endpoint.stats.errorsInRow > 5)
         endpoint.cooldown(60 * 10) // cooldown for 10 min
       else
