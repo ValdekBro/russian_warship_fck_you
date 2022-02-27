@@ -5,7 +5,7 @@ const targets = require("./targets.json")
 
 const transport = pino.transport({
   target: './log-transport.mjs',
-  options: { destination: `./logs/`, filename: 'attack_' + (new Date()).toJSON() + '.log' }
+  options: { destination: `./logs/`, filename: 'attack_.log' }
 })
 const logger = pino(transport)
 
