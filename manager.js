@@ -28,9 +28,13 @@ const run = async () => {
   }
 
   while (true) {
-    await sleep(2000)
-    console.clear()
-    endpoints.forEach(endpoint => console.log(`${endpoint.url} | Errors: ${endpoint.stats.e} | Success: ${endpoint.stats.s}`))
+    await sleep(1000)
+    const stats = {
+      s: 0,
+      e: 0
+    }
+    endpoints.forEach(endpoint => {stats.s+=endpoint.stats.s; stats.e+=endpoint.stats.e})
+    console.log(`Successfull ${stats.s} | Errors ${stats.e}`)
   }
 }
 
