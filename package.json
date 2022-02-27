@@ -5,8 +5,8 @@
   "main": "endpoint.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "rm -R -f ./logs && pm2 start process.json",
-    "update": "git pull && pm2 delete all && rm -R -f ./logs && pm2 start process.json"
+    "start": "rm -R -f ./logs || true && pm2 start process.json",
+    "update": "git pull && pm2 delete all && rm -R -f ./logs || true && pm2 start process.json"
   },
   "repository": {
     "type": "git",
