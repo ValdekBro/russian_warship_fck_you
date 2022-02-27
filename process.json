@@ -1,0 +1,18 @@
+{
+    "apps": [
+        {
+            "name": "soldat",
+            "script": "./manager.js",
+            "watch": true,
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "env_production": {
+                "NODE_ENV": "production"
+            },
+            "instances"  : 5,
+            "exec_mode"  : "cluster"
+    
+        }
+    ]
+}
