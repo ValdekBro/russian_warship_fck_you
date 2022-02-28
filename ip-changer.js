@@ -10,6 +10,7 @@ const updateAccessToken = async () => {
     accessToken = response.data.access_token
 }
 
-setInterval(() => {
-    updateAccessToken()
+setInterval(async () => {
+    await updateAccessToken()
+    console.log(accessToken)
 }, 10 * 1000) // every 60 seconds
