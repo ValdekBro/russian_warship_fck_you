@@ -13,7 +13,7 @@ const endpoints = targets.map((params) => new Endpoint(params, logger))
 
 const EXECUTION_LIMIT = 100000
 const TIMEOUT_BASE = 2000
-
+  
 const run = async () => {
   for (let i = 0; i < EXECUTION_LIMIT; i++) {
     await sleepRand(TIMEOUT_BASE, TIMEOUT_BASE + 1000)
@@ -33,6 +33,7 @@ const run = async () => {
     console.log(`Successfull ${stats.s} | Errors ${stats.e}`)
   }
 
+  console.log('EXECUTION_LIMIT reached')
 }
 
 run().catch(e => { throw e })
