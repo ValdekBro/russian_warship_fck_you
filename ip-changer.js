@@ -7,10 +7,9 @@ const updateAccessToken = async () => {
         "Metadata-Flavor": "Google"
     }})
 
-    console.log(response)
+    accessToken = response.data.access_token
 }
 
-updateAccessToken()
-// setInterval(() => {
-    
-// }, 10 * 1000) // every 60 seconds
+setInterval(() => {
+    updateAccessToken()
+}, 10 * 1000) // every 60 seconds
