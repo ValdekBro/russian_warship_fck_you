@@ -99,7 +99,7 @@ const createNewIP = async (isReserve = false) => {
 }
 
 const updateInctanceIP = async (ip) => {
-    const deleteOperation = await instances.deleteAccessConfig({
+    instances.deleteAccessConfig({
         project: PROJECT_ID,
         zone: ZONE,
         instance: process.env.INSTANCE_NAME,
@@ -107,11 +107,10 @@ const updateInctanceIP = async (ip) => {
         accessConfig: 'External NAT',
     })
 
-    await sleep(5000)
     // await waitForOperation(deleteOperation[0].latestResponse)
-    console.log('IP ADDRESS UNASIGNED: ' + ip)
+    // console.log('IP ADDRESS UNASIGNED: ' + ip)
 
-    const updateOperation = await instances.addAccessConfig({
+    instances.addAccessConfig({
         project: PROJECT_ID,
         zone: ZONE,
         instance: process.env.INSTANCE_NAME,
@@ -139,26 +138,6 @@ const main = async () => {
     let current = await getCurrentIP()
     if (!current)
         throw new Error('Current IP not found')
-
-    let reserve
-    try {
-        const reserveIPName = `${process.env.INSTANCE_NAME}-reserve`
-        reserve = await getIP(reserveIPName)
-        console.log('RESERVE IP FOUND')
-    } catch(e) {
-        reserve = await createNewIP(true)
-        await instances.addAccessConfig({
-            project: PROJECT_ID,
-            zone: ZONE,
-            instance: process.env.INSTANCE_NAME,
-            networkInterface: process.env.INSTANCE_NETWORK_INTERFACE,
-            accessConfigResource: {
-                name: 'Reserve External NAT',
-                natIP: reserve.address
-            }
-        })
-        console.log(`RESERVE IP CREATED: ${reserverIPName}`)
-    }
 
     while(true) {
         console.log(`\nCURRENT IP ADDRESS: ${current.address}(${current.name})`)
