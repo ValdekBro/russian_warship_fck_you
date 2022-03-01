@@ -25,12 +25,12 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
                 region: REGION,
             });
             operation = response[0]
-            console.log(operation)
             if (operation.error) {
                 console.log(operation.error.errors)
                 return rej(operation.error.errors[0])
             }
         } catch (e) {
+            console.log(e)
             if (e.code === 5) {
                 break
             }
