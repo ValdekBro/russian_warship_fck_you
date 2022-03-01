@@ -18,7 +18,7 @@ class Endpoint {
             hostname: q.hostname,
             port: q.port,
             method: this.type,
-            timeout: 3000,
+            timeout: 3000, // timout to establish connection
         };
         this._protocol = (q.protocol == "http") ? require('http') : require('https');
         this.logger = parentLogger.child({ url: this.url })
@@ -26,7 +26,7 @@ class Endpoint {
         this.logger.info(`Endpoint ${this.url} initialized`)
     }
 
-    attack() {
+    attack(waitResponseForMILISEC = 10000) {
         if(!this.isActive) return Promise.resolve()
         const r = new Promise((res, rej) => {
             const req = this._protocol.request(
@@ -44,7 +44,7 @@ class Endpoint {
                 req.write(this.body)
 
             req.on('socket', function (socket) {
-                socket.setTimeout(5000);
+                socket.setTimeout(waitResponseForMILISEC); // timeout to get response
                 socket.on('timeout', function () {
                     req.destroy();
                 });
