@@ -11,7 +11,6 @@ const addresses = new compute.AddressesClient();
 const instances = new compute.InstancesClient()
 
 const waitForOperation = (operation) => new Promise(async (res, rej) => {
-    console.log(operation)
     if (operation.error) {
         console.log(operation.error.errors)
         return rej(operation.error.errors[0])
@@ -27,7 +26,6 @@ const waitForOperation = (operation) => new Promise(async (res, rej) => {
                 region: REGION,
             });
             operation = response[0]
-            console.log(operation)
             if (operation.error) {
                 console.log(operation.error.errors)
                 return rej(operation.error.errors[0])
@@ -117,7 +115,7 @@ const updateInctanceIP = async (ip) => {
     })
     await waitForOperation(deleteOperation.latestResponse)
     console.log('OLD IP ADDRESS UNASSIGNED')
-    const [updateOperation] = await instances.addAccessConfig({
+    const response = await instances.addAccessConfig({
         project: PROJECT_ID,
         region: REGION,
         zone: ZONE,
@@ -128,7 +126,7 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
-    console.log(updateOperation)
+    console.log(response)
     await waitForOperation(updateOperation.latestResponse)
 }
 
