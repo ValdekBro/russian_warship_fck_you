@@ -7,14 +7,14 @@ const REGION = process.env.INSTANCE_REGION
 const ZONE = process.env.INSTANCE_ZONE
 
 const addresses = new compute.AddressesClient();
-const instances = new compute.InstancesClient()
+const instances = new compute.InstancesClient();
+const operationsClient = new compute.RegionOperationsClient();
 
 const waitForOperation = (operation) => new Promise(async (res, rej) => {
     if (operation.error) {
         console.log(operation.error.errors)
         return rej(operation.error.errors[0])
     }
-    const operationsClient = new compute.RegionOperationsClient();
     // Wait for the create operation to complete.
     while (operation.status !== 'DONE') {
         try {
