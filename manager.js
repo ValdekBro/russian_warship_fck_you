@@ -1,5 +1,5 @@
 const { Endpoint } = require("./endpoint");
-const { sleep, sleepRand } = require("./helpers");
+const { sleep, sleepRand, randomInt } = require("./helpers");
 const pino = require('pino')
 const targets = require("./targets.json")
 
