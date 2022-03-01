@@ -14,7 +14,7 @@ shuffle(endpoints)
 
 const EXECUTION_LIMIT = 500000
 const TIMEOUT_BASE = 2000
-  
+
 const run = async () => {
   for (let i = 0; i < EXECUTION_LIMIT; i++) {
     await sleepRand(TIMEOUT_BASE, TIMEOUT_BASE + 1000)
