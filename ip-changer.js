@@ -8,7 +8,8 @@ const ZONE = process.env.INSTANCE_ZONE
 
 const addresses = new compute.AddressesClient();
 const instances = new compute.InstancesClient();
-const operationsClient = new compute.ZoneOperationsClient();
+const operationsClientZ = new compute.ZoneOperationsClient();
+const operationsClientR = new compute.RegionOperationsClient();
 
 const waitForOperation = (task) => new Promise(async (res, rej) => {
     let operation = task
@@ -16,13 +17,17 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
         console.log(operation.error.errors)
         return rej(operation.error.errors[0])
     }
+
+    const client = task.zone ? operationsClientZ : operationsClientR
+
     // Wait for the create operation to complete.
     while (operation.status !== 'DONE') {
         try {
-            const response = await operationsClient.wait({
+            const response = await client.wait({
                 operation: operation.name,
                 project: PROJECT_ID,
-                zone: ZONE
+                zone: ZONE,
+                region: REGION,
             });
             operation = response[0]
             if (operation.error) {
@@ -47,6 +52,7 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
 const getAllIPs = async () => {
     const [list] = await addresses.list({
         project: PROJECT_ID,
+        zone: ZONE,
         region: REGION
     })
     return list
@@ -55,6 +61,7 @@ const getAllIPs = async () => {
 const getIP = async (name) => {
     const [address] = await addresses.get({
         project: PROJECT_ID,
+        zone: ZONE,
         region: REGION,
         address: name
     })
@@ -65,8 +72,8 @@ const getIP = async (name) => {
 const getCurrentIP = async () => {
     const [instance] = await instances.get({
         project: PROJECT_ID,
-        region: REGION,
         zone: ZONE,
+        region: REGION,
         instance: process.env.INSTANCE_NAME
     })
 
@@ -89,19 +96,9 @@ const createNewIP = async () => {
             name,
         }
     })
-
     await waitForOperation(response.latestResponse)
 
-    let newAddress
-
-    while (!newAddress) {
-        await sleep(5000)
-        try {
-            newAddress = await getIP(name)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    let newAddress = await getIP(name)
 
     return newAddress
 }
@@ -109,17 +106,15 @@ const createNewIP = async () => {
 const updateInctanceIP = async (ip) => {
     const deleteOperation = await instances.deleteAccessConfig({
         project: PROJECT_ID,
-        region: REGION,
         zone: ZONE,
         instance: process.env.INSTANCE_NAME,
         accessConfig: 'External NAT',
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
     await waitForOperation(deleteOperation[0].latestResponse)
-    console.log('deleted')
+
     const updateOperation = await instances.addAccessConfig({
         project: PROJECT_ID,
-        region: REGION,
         zone: ZONE,
         instance: process.env.INSTANCE_NAME,
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE,
@@ -129,7 +124,6 @@ const updateInctanceIP = async (ip) => {
         }
     })
     await waitForOperation(updateOperation[0].latestResponse)
-    console.log('added')
 }
 
 const releaseIP = async (name) => {
