@@ -21,15 +21,12 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
     // Wait for the create operation to complete.
     while (operation.status !== 'DONE') {
         try {
-            console.log('Sent')
             const response = await client.wait({
                 operation: operation.name,
                 project: PROJECT_ID,
                 zone: ZONE,
                 region: REGION,
             });
-            console.log('Recieved')
-            console.log(response)
             operation = response[0]
             if (operation.error) {
                 console.log(operation.error.errors)
@@ -103,11 +100,12 @@ const updateInctanceIP = async (ip) => {
         project: PROJECT_ID,
         zone: ZONE,
         instance: process.env.INSTANCE_NAME,
+        networkInterface: process.env.INSTANCE_NETWORK_INTERFACE,
         accessConfig: 'External NAT',
-        networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
-    console.log(deleteOperation[0].latestResponse)
-    await waitForOperation(deleteOperation[0].latestResponse)
+
+    await sleep(5000)
+    // await waitForOperation(deleteOperation[0].latestResponse)
     console.log('IP ADDRESS UNASIGNED: ' + ip)
 
     const updateOperation = await instances.addAccessConfig({
