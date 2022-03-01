@@ -1,6 +1,21 @@
 [
     {
-        "url": "https://yandex.by",
+        "url": "https://ya.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://www.sberbank.ru/ru/person",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://yandex.ru/",
+        "type": "GET",
+        "body": null
+    },
+    {
+        "url": "https://yandex.ru/news",
         "type": "GET",
         "body": null
     }
