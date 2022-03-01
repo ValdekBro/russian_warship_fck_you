@@ -131,6 +131,7 @@ const updateInctanceIP = async (ip) => {
     })
     console.log(updateOperation[0].latestResponse)
     await waitForOperation(updateOperation[0].latestResponse)
+    console.log('added')
 }
 
 const releaseIP = async (name) => {
@@ -139,8 +140,9 @@ const releaseIP = async (name) => {
         region: REGION,
         address: name
     })
-
+    console.log(deleteOperation[0].latestResponse)
     await waitForOperation(deleteOperation[0].latestResponse)
+    console.log('deleted')
 }
 
 const main = async () => {
