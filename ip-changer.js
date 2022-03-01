@@ -36,13 +36,7 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
             }
         } catch (e) {
             console.log(e)
-            if (e.code === 5) {
-                break
-            }
-            else {
-                console.log(e.errors)
-                return rej(e)
-            }
+            return rej(e)
         }
 
     }
@@ -111,6 +105,7 @@ const updateInctanceIP = async (ip) => {
         accessConfig: 'External NAT',
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
+    console.log(deleteOperation[0].latestResponse)
     await waitForOperation(deleteOperation[0].latestResponse)
     console.log('IP ADDRESS UNASIGNED: ' + ip)
 
