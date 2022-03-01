@@ -113,7 +113,7 @@ const updateInctanceIP = async (ip) => {
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
     await waitForOperation(deleteOperation.latestResponse)
-    
+    console.log('')
     const [updateOperation] = await instances.addAccessConfig({
         project: PROJECT_ID,
         region: REGION,
