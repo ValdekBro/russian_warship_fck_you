@@ -152,10 +152,10 @@ const main = async () => {
         await updateInctanceIP(created.address)
         console.log(`'${process.env.INSTANCE_NAME}' IP ADDRESS WAS UPDATED TO: ${created.address}(${created.name}) `)
 
-        current = created
-
         await releaseIP(current.name)
         console.log(`IP ADDRESS ${current.address}(${current.name}) RELEASED`)
+
+        current = created
     }
 
     updateIP()
