@@ -112,6 +112,7 @@ const updateInctanceIP = async (ip) => {
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
     await waitForOperation(deleteOperation[0].latestResponse)
+    console.log('IP ADDRESS UNASIGNED: ' + ip)
 
     const updateOperation = await instances.addAccessConfig({
         project: PROJECT_ID,
