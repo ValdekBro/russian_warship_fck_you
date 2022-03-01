@@ -8,8 +8,6 @@ const ZONE = process.env.INSTANCE_ZONE
 
 const addresses = new compute.AddressesClient();
 const instances = new compute.InstancesClient();
-const operationsClientZ = new compute.ZoneOperationsClient();
-const operationsClientR = new compute.RegionOperationsClient();
 
 const waitForOperation = (task) => new Promise(async (res, rej) => {
     let operation = task
@@ -18,17 +16,20 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
         return rej(operation.error.errors[0])
     }
 
-    const client = task.zone ? operationsClientZ : operationsClientR
+    const client = task.zone ? (new compute.ZoneOperationsClient()) : (new compute.RegionOperationsClient())
 
     // Wait for the create operation to complete.
     while (operation.status !== 'DONE') {
         try {
+            console.log('Sent')
             const response = await client.wait({
                 operation: operation.name,
                 project: PROJECT_ID,
                 zone: ZONE,
                 region: REGION,
             });
+            console.log('Recieved')
+            console.log(response)
             operation = response[0]
             if (operation.error) {
                 console.log(operation.error.errors)
