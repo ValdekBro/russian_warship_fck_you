@@ -126,6 +126,17 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
+    console.log({
+        project: PROJECT_ID,
+        region: REGION,
+        zone: ZONE,
+        instance: process.env.INSTANCE_NAME,
+        networkInterface: process.env.INSTANCE_NETWORK_INTERFACE,
+        accessConfigResource: {
+            name: 'External NAT',
+            natIP: ip
+        }
+    })
     console.log(response)
     await waitForOperation(updateOperation.latestResponse)
 }
