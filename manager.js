@@ -1,5 +1,5 @@
 const { Endpoint } = require("./endpoint");
-const { sleep, sleepRand, randomInt } = require("./helpers");
+const { sleep, sleepRand, randomInt, shuffle } = require("./helpers");
 const pino = require('pino')
 const targets = require("./targets.json")
 
@@ -10,6 +10,7 @@ const transport = pino.transport({
 const logger = pino(transport)
 
 const endpoints = targets.map((params) => new Endpoint(params, logger))
+shuffle(endpoints)
 
 const EXECUTION_LIMIT = 500000
 const TIMEOUT_BASE = 2000
