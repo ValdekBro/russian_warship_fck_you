@@ -91,7 +91,7 @@ const createNewIP = async () => {
     let newAddress
 
     while (!newAddress) {
-        sleep(5000)
+        await sleep(5000)
         try {
             newAddress = await getIP(name)
         } catch (e) {
@@ -156,7 +156,7 @@ const main = async () => {
 
         current = created
 
-        await sleep(10 * 1000)
+        await sleep(10 * 1000) // cooldown 10 sec
     }
 }
 main()
