@@ -19,7 +19,6 @@ const waitForOperation = (operation) => new Promise(async (res, rej) => {
     // Wait for the create operation to complete.
     while (operation.status !== 'DONE') {
         try {
-            console.log(operation)
             const response = await operationsClient.wait({
                 operation: operation.name,
                 project: PROJECT_ID,
