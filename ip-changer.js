@@ -82,7 +82,7 @@ const getCurrentIP = async () => {
 
 const createNewIP = async () => {
     const name = `${process.env.INSTANCE_NAME}-${(new Date()).getTime()}`
-    const insertResponse = await addresses.insert({
+    const [response] = await addresses.insert({
         project: PROJECT_ID,
         region: REGION,
         addressResource: {
@@ -90,7 +90,7 @@ const createNewIP = async () => {
         }
     })
 
-    await waitForOperation(insertResponse[0])
+    await waitForOperation(response.latestResponse)
 
     let newAddress
 
@@ -115,7 +115,7 @@ const updateInctanceIP = async (ip) => {
         accessConfig: 'External NAT',
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
-    await waitForOperation(deleteOperation[0])
+    await waitForOperation(deleteOperation[0].latestResponse)
     console.log('deleted')
     const updateOperation = await instances.addAccessConfig({
         project: PROJECT_ID,
@@ -128,7 +128,7 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
-    await waitForOperation(updateOperation[0])
+    await waitForOperation(updateOperation[0].latestResponse)
     console.log('added')
 }
 
@@ -138,7 +138,7 @@ const releaseIP = async (name) => {
         region: REGION,
         address: name
     })
-    await waitForOperation(deleteOperation[0])
+    await waitForOperation(deleteOperation[0].latestResponse)
     console.log('deleted')
 }
 
