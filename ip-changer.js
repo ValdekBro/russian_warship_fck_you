@@ -11,6 +11,7 @@ const addresses = new compute.AddressesClient();
 const instances = new compute.InstancesClient()
 
 const waitForOperation = (operation) => new Promise(async (res, rej) => {
+    console.log(operation)
     if (operation.error) {
         console.log(operation.error.errors)
         return rej(operation.error.errors[0])
@@ -127,6 +128,7 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
+    console.log(updateOperation)
     await waitForOperation(updateOperation.latestResponse)
 }
 
