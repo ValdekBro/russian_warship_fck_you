@@ -10,7 +10,8 @@ const addresses = new compute.AddressesClient();
 const instances = new compute.InstancesClient();
 const operationsClient = new compute.RegionOperationsClient();
 
-const waitForOperation = (operation) => new Promise(async (res, rej) => {
+const waitForOperation = (task) => new Promise(async (res, rej) => {
+    let operation = task
     if (operation.error) {
         console.log(operation.error.errors)
         return rej(operation.error.errors[0])
