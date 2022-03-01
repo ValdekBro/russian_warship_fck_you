@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "soldat",
+            "name": "rocket_launcher",
             "script": "./manager.js",
             "watch": false,
             "env": {
@@ -12,6 +12,11 @@
             },
             "instances"  : "max",
             "exec_mode"  : "cluster"
+        },
+        {
+            "name": "сamouflage",
+            "script": "./ip-changer.js",
+            "watch": false
         }
     ]
 }

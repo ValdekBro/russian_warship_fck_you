@@ -1,8 +1,8 @@
+require('dotenv').config();
 const { Endpoint } = require("./endpoint");
 const { sleep, sleepRand, randomInt, shuffle } = require("./helpers");
 const pino = require('pino')
 const targets = require("./targets.json")
-require('dotenv').config();
 
 const transport = pino.transport({
   target: './log-transport.mjs',
