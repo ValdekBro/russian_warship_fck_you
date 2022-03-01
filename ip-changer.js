@@ -113,7 +113,7 @@ const updateInctanceIP = async (ip) => {
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
     await waitForOperation(deleteOperation.latestResponse)
-    console.log('')
+    console.log('OLD IP ADDRESS UNASSIGNED')
     const [updateOperation] = await instances.addAccessConfig({
         project: PROJECT_ID,
         region: REGION,
@@ -158,7 +158,7 @@ const main = async () => {
         current = created
     }
 
-    updateIP()
+    await updateIP()
 
     setInterval(updateIP, 60 * 1000) // every 60 seconds
 }
