@@ -21,9 +21,9 @@ class Endpoint {
             timeout: 5000, // timout to establish connection
         };
         this._protocol = (q.protocol == "http") ? require('http') : require('https');
-        this.logger = parentLogger.child({ url: this.url })
+        // this.logger = parentLogger.child({ url: this.url })
 
-        this.logger.info(`Endpoint ${this.url} initialized`)
+        // this.logger.info(`Endpoint ${this.url} initialized`)
     }
 
     attack(waitResponseForMILISEC = 15000) {
@@ -53,7 +53,7 @@ class Endpoint {
             req.end()
         })
         r.then(result => {
-            this.logger.info(`${result.status} | ${result.error}`)
+            // this.logger.info(`${result.status} | ${result.error}`)
             if (result.status < 400) {
                 this.stats.s++
                 this.stats.errorsInRow = 0
@@ -63,7 +63,7 @@ class Endpoint {
                 this.stats.errorsInRow++
             }
         }).catch((e) => {
-            this.logger.info(`Failed | ${e}`)
+            // this.logger.info(`Failed | ${e}`)
             this.stats.e++
             this.stats.errorsInRow++
         })
