@@ -125,18 +125,17 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
-    console.log(updateOperation[0])
     await waitForOperation(updateOperation[0].latestResponse)
 }
 
 const releaseIP = async (name) => {
-    const [deleteOperation] = await addresses.delete({
+    const deleteOperation = await addresses.delete({
         project: PROJECT_ID,
         region: REGION,
         address: name
     })
 
-    await waitForOperation(deleteOperation.latestResponse)
+    await waitForOperation(deleteOperation[0].latestResponse)
 }
 
 const main = async () => {
