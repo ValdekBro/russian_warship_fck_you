@@ -106,6 +106,7 @@ const updateInctanceIP = async (ip) => {
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE,
         accessConfig: 'External NAT',
     })
+    console.log('d')
 
     // await waitForOperation(deleteOperation[0].latestResponse)
     // console.log('IP ADDRESS UNASIGNED: ' + ip)
@@ -120,6 +121,7 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
+    console.log('a')
     await sleep(20000)
     // await waitForOperation(updateOperation[0].latestResponse)
 }
@@ -130,6 +132,7 @@ const releaseIP = async (name) => {
         region: REGION,
         address: name
     })
+    console.log('dd')
     await waitForOperation(deleteOperation[0].latestResponse)
     console.log('deleted')
 }
