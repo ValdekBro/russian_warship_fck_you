@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "rm -R -f ./logs || true && pm2 start process.json",
-    "update": "git pull && pm2 delete all && rm -R -f ./logs || true && pm2 start process.json"
+    "update": "git pull && pm2 delete rocket_launcher && rm -R -f ./logs || true && pm2 start process.json"
   },
   "repository": {
     "type": "git",
