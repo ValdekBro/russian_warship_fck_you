@@ -19,10 +19,10 @@ const run = async () => {
   for (let i = 0; i < EXECUTION_LIMIT; i++) {
     await sleepRand(TIMEOUT_BASE, TIMEOUT_BASE + 2000)
     endpoints.forEach(async endpoint => {
-      if (endpoint.stats.errorsInRow > 5)
+      if (endpoint.isActive && endpoint.stats.errorsInRow > 10)
         endpoint.cooldown(randomInt(1 * 60, 2 * 60)) // cooldown for rand(1, 2) min
-      else
-        endpoint.attack()
+      
+      endpoint.attack()
     })
 
     const stats = {
