@@ -32,8 +32,7 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
             }
         } catch (e) {
             if (e.code === 5) {
-                console.log(e)
-                continue;
+                break
             }
             else {
                 console.log(e.errors)
