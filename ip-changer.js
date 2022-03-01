@@ -61,7 +61,7 @@ const getIP = async (name) => {
     return address
 }
 
-const getCurrentIP = async () => {
+const getInstanceAccessConfigs = async () => {
     const [instance] = await instances.get({
         project: PROJECT_ID,
         zone: ZONE,
@@ -69,18 +69,21 @@ const getCurrentIP = async () => {
         instance: process.env.INSTANCE_NAME
     })
 
-    if (!instance.networkInterfaces[0].accessConfigs[0])
-        return null
+    return instance.networkInterfaces[0].accessConfigs
+}
 
-    const ip = instance.networkInterfaces[0].accessConfigs[0].natIP
+const getCurrentIP = async () => {
+    const configs = await getInstanceAccessConfigs()
+
+    const ip = (configs.find(conf => conf.name === 'External NAT')).natIP
 
     const all = await getAllIPs()
 
     return all.find(address => address.address == ip)
 }
 
-const createNewIP = async () => {
-    const name = `${process.env.INSTANCE_NAME}-${(new Date()).getTime()}`
+const createNewIP = async (isReserve = false) => {
+    const name = `${process.env.INSTANCE_NAME}-${isReserve ? 'reserve' : (new Date()).getTime()}`
     const [response] = await addresses.insert({
         project: PROJECT_ID,
         region: REGION,
@@ -136,6 +139,26 @@ const main = async () => {
     let current = await getCurrentIP()
     if (!current)
         throw new Error('Current IP not found')
+
+    let reserve
+    try {
+        const reserveIPName = `${process.env.INSTANCE_NAME}-reserve`
+        reserve = await getIP(reserveIPName)
+        console.log('RESERVE IP FOUND')
+    } catch(e) {
+        reserve = await createNewIP(true)
+        await instances.addAccessConfig({
+            project: PROJECT_ID,
+            zone: ZONE,
+            instance: process.env.INSTANCE_NAME,
+            networkInterface: process.env.INSTANCE_NETWORK_INTERFACE,
+            accessConfigResource: {
+                name: 'Reserve External NAT',
+                natIP: reserve.address
+            }
+        })
+        console.log(`RESERVE IP CREATED: ${reserverIPName}`)
+    }
 
     while(true) {
         console.log(`\nCURRENT IP ADDRESS: ${current.address}(${current.name})`)
