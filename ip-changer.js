@@ -1,28 +1,165 @@
 const { default: axios } = require("axios")
+const compute = require('@google-cloud/compute');
+const { sleep } = require("./helpers");
+require('dotenv').config();
 
 const PROJECT_ID = 'todo-7db20'
-const REGION = 'asia-east2-a'
+const REGION = process.env.INSTANCE_REGION
+const ZONE = process.env.INSTANCE_ZONE
 
-let accessToken = `ya29.c.b0AXv0zTPVk4Z4b1Vif7CZYy1Pi7H9dU9p5aLjJ8CVUR5Zg0C2fDEEEmIqP0mBq92R4BjmLnYWFPNM2YDkf2aaSLe5obx6WrRB6r9VANmfCBcLajUpG5hAgou0vNfCHt8Xp9HFz3SCaeSbF1AxPKtJIugtoRf8ucxLI0VOu1MedlZcfSZp3LGvTye_DbdDK0KXjhbkQehWDqrhZPl7yXVSWdk`
+const addresses = new compute.AddressesClient();
+const instances = new compute.InstancesClient()
 
-const updateAccessToken = async () => {
-    const response = await axios.get("http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token", { headers: {
-        "Metadata-Flavor": "Google"
-    }})
+const waitForOperation = (operation) => new Promise(async (res, rej) => {
+    if (operation.error) {
+        console.log(operation.error.errors)
+        return rej(operation.error.errors[0])
+    }
+    const operationsClient = new compute.RegionOperationsClient();
+    // Wait for the create operation to complete.
+    while (operation.status !== 'DONE') {
+        try {
+            const response = await operationsClient.wait({
+                operation: operation.name,
+                project: PROJECT_ID,
+                region: REGION,
+            });
+            operation = response[0]
+            if (operation.error) {
+                console.log(operation.error.errors)
+                return rej(operation.error.errors[0])
+            }
+        } catch (e) {
+            if (e.code === 5) return res(operation) // operation already deleted
+            else {
+                console.log(e.errors)
+                return rej(e)
+            }
+        }
 
-    accessToken = response.data.access_token
+    }
+    return res(operation)
+})
+
+const getAllIPs = async () => {
+    const [list] = await addresses.list({
+        project: PROJECT_ID,
+        region: REGION
+    })
+    return list
 }
 
-const getAllStaticIP = async () => {
-    const response = await axios.get(`https://compute.googleapis.com/compute/v1/projects/${PROJECT_ID}/regions/${REGION}/addresses`, { headers: {
-        "Authorization": `Bearer ${accessToken}`
-    }})
+const getIP = async (name) => {
+    const [address] = await addresses.get({
+        project: PROJECT_ID,
+        region: REGION,
+        address: name
+    })
 
-    return response.data
+    return address
 }
 
-setInterval(async () => {
-    await updateAccessToken()
-    // console.log(await getAllStaticIP())
-    console.log(accessToken)
-}, 10 * 1000) // every 60 seconds
+const getCurrentIP = async () => {
+    const [instance] = await instances.get({
+        project: PROJECT_ID,
+        region: REGION,
+        zone: ZONE,
+        instance: process.env.INSTANCE_NAME
+    })
+
+    if (!instance.networkInterfaces[0].accessConfigs[0])
+        return null
+
+    const ip = instance.networkInterfaces[0].accessConfigs[0].natIP
+
+    const all = await getAllIPs()
+
+    return all.find(address => address.address == ip)
+}
+
+const createNewIP = async () => {
+    const name = `${process.env.INSTANCE_NAME}-${(new Date()).getTime()}`
+    const [response] = await addresses.insert({
+        project: PROJECT_ID,
+        region: REGION,
+        addressResource: {
+            name,
+        }
+    })
+
+    await waitForOperation(response.latestResponse)
+
+    let newAddress
+
+    while (!newAddress) {
+        sleep(5000)
+        try {
+            newAddress = await getIP(name)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    return newAddress
+}
+
+const updateInctanceIP = async (ip) => {
+    const [deleteOperation] = await instances.deleteAccessConfig({
+        project: PROJECT_ID,
+        region: REGION,
+        zone: ZONE,
+        instance: process.env.INSTANCE_NAME,
+        accessConfig: 'External NAT',
+        networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
+    })
+    await waitForOperation(deleteOperation.latestResponse)
+    
+    const [updateOperation] = await instances.addAccessConfig({
+        project: PROJECT_ID,
+        region: REGION,
+        zone: ZONE,
+        instance: process.env.INSTANCE_NAME,
+        networkInterface: process.env.INSTANCE_NETWORK_INTERFACE,
+        accessConfigResource: {
+            name: 'External NAT',
+            natIP: ip
+        }
+    })
+    await waitForOperation(updateOperation.latestResponse)
+}
+
+const releaseIP = async (name) => {
+    const [deleteOperation] = await addresses.delete({
+        project: PROJECT_ID,
+        region: REGION,
+        address: name
+    })
+
+    await waitForOperation(deleteOperation.latestResponse)
+}
+
+const main = async () => {
+    let current = await getCurrentIP()
+    if (!current)
+        throw new Error('Current IP not found')
+
+    const updateIP = async () => {
+        console.log(`\nCURRENT IP ADDRESS: ${current.address}(${current.name})`)
+
+        const created = await createNewIP()
+        console.log(`CREATED NEW IP ADDRESS: ${created.address}(${created.name})`)
+
+        await updateInctanceIP(created.address)
+        console.log(`'${process.env.INSTANCE_NAME}' IP ADDRESS WAS UPDATED TO: ${created.address}(${created.name}) `)
+
+        current = created
+
+        await releaseIP(current.name)
+        console.log(`IP ADDRESS ${current.address}(${current.name}) RELEASED`)
+    }
+
+    updateIP()
+
+    setInterval(updateIP, 60 * 1000) // every 60 seconds
+}
+main()

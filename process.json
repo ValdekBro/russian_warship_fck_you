@@ -12,7 +12,6 @@
             },
             "instances"  : "max",
             "exec_mode"  : "cluster"
-    
         }
     ]
 }
