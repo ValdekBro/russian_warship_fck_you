@@ -104,7 +104,7 @@ const createNewIP = async () => {
 }
 
 const updateInctanceIP = async (ip) => {
-    const [deleteOperation] = await instances.deleteAccessConfig({
+    const deleteOperation = await instances.deleteAccessConfig({
         project: PROJECT_ID,
         region: REGION,
         zone: ZONE,
@@ -112,9 +112,9 @@ const updateInctanceIP = async (ip) => {
         accessConfig: 'External NAT',
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
-    await waitForOperation(deleteOperation.latestResponse)
-    console.log('OLD IP ADDRESS UNASSIGNED')
-    const response = await instances.addAccessConfig({
+    await waitForOperation(deleteOperation[0].latestResponse)
+
+    const updateOperation = await instances.addAccessConfig({
         project: PROJECT_ID,
         region: REGION,
         zone: ZONE,
@@ -125,19 +125,8 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
-    console.log({
-        project: PROJECT_ID,
-        region: REGION,
-        zone: ZONE,
-        instance: process.env.INSTANCE_NAME,
-        networkInterface: process.env.INSTANCE_NETWORK_INTERFACE,
-        accessConfigResource: {
-            name: 'External NAT',
-            natIP: ip
-        }
-    })
-    console.log(response)
-    await waitForOperation(updateOperation.latestResponse)
+    console.log(updateOperation[0])
+    await waitForOperation(updateOperation[0].latestResponse)
 }
 
 const releaseIP = async (name) => {
