@@ -21,8 +21,8 @@ const getAllStaticIP = async () => {
     return response.data
 }
 
-// setInterval(async () => {
+setInterval(async () => {
     await updateAccessToken()
     console.log(await getAllStaticIP())
     console.log(accessToken)
-// }, 10 * 1000) // every 60 seconds
+}, 10 * 1000) // every 60 seconds
