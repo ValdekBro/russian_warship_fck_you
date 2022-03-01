@@ -118,7 +118,8 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
-    await waitForOperation(updateOperation[0].latestResponse)
+    await sleep(5000)
+    // await waitForOperation(updateOperation[0].latestResponse)
 }
 
 const releaseIP = async (name) => {
