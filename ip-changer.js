@@ -8,7 +8,7 @@ const ZONE = process.env.INSTANCE_ZONE
 
 const addresses = new compute.AddressesClient();
 const instances = new compute.InstancesClient();
-const operationsClient = new compute.RegionOperationsClient();
+const operationsClient = new compute.ZoneOperationsClient();
 
 const waitForOperation = (task) => new Promise(async (res, rej) => {
     let operation = task
@@ -22,7 +22,7 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
             const response = await operationsClient.wait({
                 operation: operation.name,
                 project: PROJECT_ID,
-                region: REGION,
+                zone: ZONE
             });
             operation = response[0]
             if (operation.error) {
@@ -115,7 +115,6 @@ const updateInctanceIP = async (ip) => {
         accessConfig: 'External NAT',
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
-    console.log(deleteOperation[0].latestResponse)
     await waitForOperation(deleteOperation[0].latestResponse)
     console.log('deleted')
     const updateOperation = await instances.addAccessConfig({
@@ -129,7 +128,6 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
-    console.log(updateOperation[0].latestResponse)
     await waitForOperation(updateOperation[0].latestResponse)
     console.log('added')
 }
@@ -140,7 +138,6 @@ const releaseIP = async (name) => {
         region: REGION,
         address: name
     })
-    console.log(deleteOperation[0].latestResponse)
     await waitForOperation(deleteOperation[0].latestResponse)
     console.log('deleted')
 }
