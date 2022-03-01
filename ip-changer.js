@@ -31,7 +31,10 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
                 return rej(operation.error.errors[0])
             }
         } catch (e) {
-            if (e.code === 5) return res(operation) // operation already deleted
+            if (e.code === 5) {
+                console.log(e)
+                break;
+            } // operation already deleted
             else {
                 console.log(e.errors)
                 return rej(e)
