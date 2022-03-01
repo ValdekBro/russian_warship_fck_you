@@ -117,7 +117,7 @@ const updateInctanceIP = async (ip) => {
     })
     console.log(deleteOperation[0].latestResponse)
     await waitForOperation(deleteOperation[0].latestResponse)
-
+    console.log('deleted')
     const updateOperation = await instances.addAccessConfig({
         project: PROJECT_ID,
         region: REGION,
