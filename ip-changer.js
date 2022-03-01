@@ -1,4 +1,3 @@
-const { default: axios } = require("axios")
 const compute = require('@google-cloud/compute');
 const { sleep } = require("./helpers");
 require('dotenv').config();
