@@ -54,7 +54,7 @@ class Endpoint {
         })
         r.then(result => {
             this.logger.info(`${result.status} | ${result.error}`)
-            if (result.status < 300) this.stats.s++
+            if (result.status < 400) this.stats.s++
             else {
                 this.stats.e++
                 this.stats.errorsInRow++
