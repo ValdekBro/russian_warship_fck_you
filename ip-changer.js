@@ -74,7 +74,7 @@ const getInstanceAccessConfigs = async () => {
 
 const getCurrentIP = async () => {
     const configs = await getInstanceAccessConfigs()
-
+    console.log(configs)
     const ip = (configs.find(conf => conf.name === 'External NAT')).natIP
 
     const all = await getAllIPs()
