@@ -32,9 +32,8 @@ const waitForOperation = (task) => new Promise(async (res, rej) => {
             }
         } catch (e) {
             if (e.code === 5) {
-                console.log(e)
-                break;
-            } // operation already deleted
+                continue
+            }
             else {
                 console.log(e.errors)
                 return rej(e)
@@ -116,7 +115,6 @@ const updateInctanceIP = async (ip) => {
         accessConfig: 'External NAT',
         networkInterface: process.env.INSTANCE_NETWORK_INTERFACE
     })
-    console.log(deleteOperation[0].latestResponse)
     await waitForOperation(deleteOperation[0].latestResponse)
 
     const updateOperation = await instances.addAccessConfig({
@@ -130,7 +128,6 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
-    console.log(updateOperation[0].latestResponse)
     await waitForOperation(updateOperation[0].latestResponse)
 }
 
