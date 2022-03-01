@@ -143,7 +143,7 @@ const main = async () => {
     if (!current)
         throw new Error('Current IP not found')
 
-    const updateIP = async () => {
+    while(true) {
         console.log(`\nCURRENT IP ADDRESS: ${current.address}(${current.name})`)
 
         const created = await createNewIP()
@@ -156,10 +156,8 @@ const main = async () => {
         console.log(`IP ADDRESS ${current.address}(${current.name}) RELEASED`)
 
         current = created
+
+        await sleep(10 * 1000)
     }
-
-    await updateIP()
-
-    setInterval(updateIP, 60 * 1000) // every 60 seconds
 }
 main()
