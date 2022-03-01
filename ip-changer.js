@@ -120,7 +120,7 @@ const updateInctanceIP = async (ip) => {
             natIP: ip
         }
     })
-    await sleep(5000)
+    await sleep(10000)
     // await waitForOperation(updateOperation[0].latestResponse)
 }
 
